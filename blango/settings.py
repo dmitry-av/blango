@@ -32,16 +32,17 @@ class Dev(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         "django.contrib.sites",
-        'django.contrib.staticfiles',
-        'crispy_forms',
-        'crispy_bootstrap5',
-        'debug_toolbar',
-        'blango_auth',
-        'blog',
+        "django.contrib.staticfiles",
+        "crispy_forms",
+        "crispy_bootstrap5",
+        "debug_toolbar",
+        "blango_auth",
+        "blog",
         "allauth",
         "allauth.account",
         "allauth.socialaccount",
         "allauth.socialaccount.providers.google",
+        "rest_framework",
     ]
 
     SITE_ID = 1
