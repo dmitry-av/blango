@@ -23,6 +23,14 @@ class Dev(Configuration):
     SESSION_COOKIE_SAMESITE = 'None'
     AUTH_USER_MODEL = "blango_auth.User"
 
+    REST_FRAMEWORK = {
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework.authentication.BasicAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
+            "rest_framework.authentication.TokenAuthentication",
+        ]
+    }
+
     # Application definition
 
     INSTALLED_APPS = [
@@ -31,18 +39,19 @@ class Dev(Configuration):
         'django.contrib.contenttypes',
         'django.contrib.sessions',
         'django.contrib.messages',
-        "django.contrib.sites",
-        "django.contrib.staticfiles",
-        "crispy_forms",
-        "crispy_bootstrap5",
-        "debug_toolbar",
-        "blango_auth",
-        "blog",
-        "allauth",
-        "allauth.account",
-        "allauth.socialaccount",
-        "allauth.socialaccount.providers.google",
-        "rest_framework",
+        'django.contrib.sites',
+        'django.contrib.staticfiles',
+        'crispy_forms',
+        'crispy_bootstrap5',
+        'debug_toolbar',
+        'blango_auth',
+        'blog',
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.google',
+        'rest_framework',
+        'rest_framework.authtoken'
     ]
 
     SITE_ID = 1
