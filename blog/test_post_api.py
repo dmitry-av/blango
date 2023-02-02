@@ -61,7 +61,7 @@ class PostApiTestCase(TestCase):
             # self.assertEqual(
             #     post_obj.published_at,
             #     datetime.strptime(
-            #         post_dict["published_at"], "%Y-%m-%dT%H:%M:%S.%fZ"
+            #         post_dict["published_at"], "%Y-%m-%dT%H:%M:%S.%f%z"
             #     ).replace(tzinfo=UTC),
             # )
 
