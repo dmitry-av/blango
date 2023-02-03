@@ -24,63 +24,73 @@ class PostRow extends React.Component {
 }
 
 class PostTable extends React.Component {
-  state = {
-    dataLoaded: true,
-    data: {
-      results: [
-        {
-          id: 15,
-          tags: [
-            'django', 'react'
-          ],
-          'hero_image': {
-            'thumbnail': '/media/__sized__/hero_images/IMG_2744-thumbnail-100x100-70.JPG',
-            'full_size': '/media/hero_images/IMG_2744.jpg'
-          },
-          title: 'Test Post',
-          slug: 'test-post',
-          summary: 'A test post, created for Django/React.'
-        }
-      ]
+    state = {
+        dataLoaded: false,
+        data: null
     }
-  }
 
-  render () {
-    let rows
-    if (this.state.dataLoaded) {
-      if (this.state.data.results.length) {
-        rows = this.state.data.results.map(post => <PostRow post={post} key={post.id}/>)
+    componentDidMount () {
+      fetch(this.props.url).then(response => {
+        if (response.status !== 200) {
+          throw new Error('Invalid status from server: ' + response.statusText)
+        }
+
+        return response.json()
+      }).then(data => {
+        this.setState({
+          dataLoaded: true,
+          data: data
+        })
+      }).catch(e => {
+        console.error(e)
+        this.setState({
+          dataLoaded: true,
+          data: {
+            results: []
+          }
+        })
+      })
+    }
+
+    render () {
+      let rows
+      if (this.state.dataLoaded) {
+        if (this.state.data.results.length) {
+          rows = this.state.data.results.map(post => <PostRow post={post} key={post.id}/>)
+        } else {
+          rows = <tr>
+            <td colSpan="6">No results found.</td>
+          </tr>
+        }
       } else {
         rows = <tr>
-          <td colSpan="6">No results found.</td>
+          <td colSpan="6">Loading&hellip;</td>
         </tr>
       }
-    } else {
-      rows = <tr>
-        <td colSpan="6">Loading&hellip;</td>
-      </tr>
-    }
 
-    return <table className="table table-striped table-bordered mt-2">
-      <thead>
-      <tr>
-        <th>Title</th>
-        <th>Image</th>
-        <th>Tags</th>
-        <th>Slug</th>
-        <th>Summary</th>
-        <th>Link</th>
-      </tr>
-      </thead>
-      <tbody>
-      {rows}
-      </tbody>
-    </table>
+      return <table className="table table-striped table-bordered mt-2">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Image</th>
+          <th>Tags</th>
+          <th>Slug</th>
+          <th>Summary</th>
+          <th>Link</th>
+        </tr>
+        </thead>
+        <tbody>
+        {rows}
+        </tbody>
+      </table>
+    }
   }
-}
 
 const domContainer = document.getElementById('react_root')
 ReactDOM.render(
-  React.createElement(PostTable),
+  React.createElement(
+    PostTable,
+    {url: postListUrl}
+  ),
   domContainer
 )
